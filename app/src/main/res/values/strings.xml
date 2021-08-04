@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">YouTube_template</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty"/>
+    <string name="home">홈</string>
+    <string name="search">탐색</string>
+    <string name="subscription">구독</string>
+    <string name="storage">보관함</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="language">언어</string>
+    <string name="research">검색</string>
+    <string name="user">사용자</string>
+    <string name="original">Original</string>
+    <string name="MusicApp">Music App</string>
+    <string name="middle_dot">u\00b7</string>
+    <!-- languageActivity 에서 사용됨 -->
+    <string name="set_latitude">위도 : </string>
+    <string name="set_longitude">경도 : </string>
+    <string name="language_activity_appbar">위치 설정</string>
+    <string name="set_country">설정 국가 : </string>
+    <!-- loginActivity 에서 사용됨 -->
+    <string name="login_activity_title">YouTube 최대한 활용하기</string>
+    <string name="login_activity_description">지금 로그인하여 동영상을 업로드하거나 저장하고 동영상에 댓글을 남겨 보세요</string>
+    <string name="service_terms">개인정보처리방침 및 서비스 약관</string>
+    <!-- ContentDescription -->
+    <string name="bottom_fab_info">동영상을 올릴 때 사용합니다</string>
 </resources>

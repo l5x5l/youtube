@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/appbar_language"
+        android:title="@string/language"
+        android:icon="@drawable/ic_quest"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/appbar_search"
+        android:title="@string/research"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/appbar_user"
+        android:icon="@drawable/ic_user"
+        android:title="@string/user"
+        app:showAsAction="ifRoom"/>
+
+</menu>
