@@ -2,14 +2,15 @@ package com.example.youtube_template.src.main.home
 
 import com.example.youtube_template.src.main.home.models.Categories
 import com.example.youtube_template.src.main.home.models.Channels
+import com.example.youtube_template.src.main.home.models.VideoMeta
 import com.example.youtube_template.src.main.home.models.Videos
 
 interface HomeFragmentView {
-    fun onGetVideoSuccess(response : Videos)
+    fun onGetVideoSuccess(videoList : List<VideoMeta>, channelString : String, nextToken : String? = null)
 
     fun onGetVideoFailure(message : String)
 
-    fun onGetUserSuccess(response : Channels)
+    fun onGetUserSuccess(map : Map<String, String>)
 
     fun onGetUserFailure(message: String)
 

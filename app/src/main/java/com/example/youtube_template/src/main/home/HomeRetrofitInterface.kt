@@ -15,7 +15,9 @@ interface HomeRetrofitInterface {
         @Query("part") part : String = "snippet, statistics",
         @Query("chart") chart : String = "mostPopular",
         @Query("regionCode") regionCode : String = "KR",
-        @Query("maxResults") maxResults : Int = 10
+        @Query("maxResults") maxResults : Int = 10,
+        @Query("videoCategoryId") videoCategoryId : String = "0",
+        @Query("pageToken") pageToken : String? = null
     ) : Call<Videos>
 
     @GET("channels")

@@ -11,12 +11,23 @@ import retrofit2.Response
 class HomeService(val view : HomeFragmentView) {
     private val homeRetrofitInterface = GlobalApplication.youtubeRetrofit.create(HomeRetrofitInterface::class.java)
 
-    fun tryGetVideos() {
+    fun tryGetVideos(nextToken : String ? = null) {
         //val homeRetrofitInterface = GlobalApplication.youtubeRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getVideosPopular().enqueue(object: Callback<Videos>{
+        homeRetrofitInterface.getVideosPopular(pageToken = nextToken).enqueue(object: Callback<Videos>{
             override fun onResponse(call: Call<Videos>, response: Response<Videos>) {
                 if (response.isSuccessful){
-                    view.onGetVideoSuccess(response.body()!!)
+                    val tempVideoList = response.body()?.items
+                    val nextToken = response.body()?.nextPageToken
+
+                    var channelString = ""
+                    for (i in tempVideoList!!.indices){
+                        if (i != 0){
+                            channelString += ","
+                        }
+                        channelString += tempVideoList!![i].snippet.channelId
+                    }
+
+                    view.onGetVideoSuccess(tempVideoList, channelString, nextToken)
                 } else {
                     view.onGetVideoFailure("get response is failure")
                 }
@@ -33,7 +44,12 @@ class HomeService(val view : HomeFragmentView) {
         homeRetrofitInterface.getChannelProfile(id = channelId).enqueue(object: Callback<Channels>{
             override fun onResponse(call: Call<Channels>, response: Response<Channels>) {
                 if (response.isSuccessful){
-                    view.onGetUserSuccess(response.body()!!)
+                    val channelProfileList = response.body()?.items
+                    val map = mutableMapOf<String, String>()
+                    for (channelProfile in channelProfileList!!){
+                        map[channelProfile.id] = channelProfile.snippet.thumbnails.default.url
+                    }
+                    view.onGetUserSuccess(map)
                 } else {
                     view.onGetUserFailure("get response is failure")
                 }

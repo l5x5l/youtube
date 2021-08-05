@@ -10,7 +10,7 @@ data class VideoSnippet(val publishedAt: String, val channelId : String, val tit
 
 data class VideoMeta(val id: String, val snippet: VideoSnippet, val statistics: VideoStatistics)
 
-data class Videos(val items: List<VideoMeta>)
+data class Videos(val items: List<VideoMeta>, val nextPageToken : String)
 
 // "search : list" api 이용시 사용할 data class
 data class SearchId(val kind : String, val videoId : String)

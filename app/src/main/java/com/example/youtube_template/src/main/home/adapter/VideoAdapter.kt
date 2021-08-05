@@ -1,6 +1,7 @@
 package com.example.youtube_template.src.main.home.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,18 +10,19 @@ import com.example.youtube_template.R
 import com.example.youtube_template.databinding.ItemVideoBinding
 import com.example.youtube_template.src.main.home.models.VideoMeta
 
-class VideoAdapter(private val context: Context, private var dataList : List<VideoMeta>? = listOf()) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+class VideoAdapter(private val context: Context) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
+    private val dataList = ArrayList<VideoMeta>()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemVideoBinding
-    private var profileData : Map<String, String> = mutableMapOf()
+    private var profileData = mutableMapOf<String, String>()
 
     class ViewHolder(binding : ItemVideoBinding) : RecyclerView.ViewHolder(binding.root) {
         val thumbnail = binding.ivThumbnail
         val videoTitle = binding.tvVideoTitle
         val videoInfo = binding.tvVideoInfo
         val userProfile = binding.ivProfile
-        val btnMore = binding.btnMore
+        //val btnMore = binding.btnMore
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,14 +32,19 @@ class VideoAdapter(private val context: Context, private var dataList : List<Vid
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val temp = dataList!![position].snippet.channelTitle + " \u00b7 조회수 : " + getInformationString(dataList!![position].statistics.viewCount)
-        holder.videoTitle.text = dataList!![position].snippet.title
+        val temp = dataList[position].snippet.channelTitle + " \u00b7 조회수 " + getInformationString(dataList[position].statistics.viewCount)
+        holder.videoTitle.text = dataList[position].snippet.title
         holder.videoInfo.text = temp
-        Glide.with(context).load(dataList!![position].snippet.thumbnails.high.url).into(holder.thumbnail)
-        if (profileData.containsKey(dataList!![position].snippet.channelId)){
-            Glide.with(context).load(profileData[dataList!![position].snippet.channelId]).into(holder.userProfile)
+        Glide.with(context).load(dataList[position].snippet.thumbnails.high.url).into(holder.thumbnail)
+        if (profileData.containsKey(dataList[position].snippet.channelId)){
+            Glide.with(context).load(profileData[dataList[position].snippet.channelId]).into(holder.userProfile)
         } else {
             holder.userProfile.setBackgroundColor(context.getColor(R.color.black))
+        }
+
+        if (position == dataList.size - 1) {
+/*            Log.d("test", position.toString() + " : " + dataList.size.toString())
+            pageLoader.pageLoading()*/
         }
 
             // 클릭 이벤트와 long click 은 나중에
@@ -47,7 +54,7 @@ class VideoAdapter(private val context: Context, private var dataList : List<Vid
         }*/
     }
 
-    override fun getItemCount(): Int = dataList!!.size
+    override fun getItemCount(): Int = dataList.size
 
     private fun getInformationString(watchCount : Long) : String {
         return when(watchCount / 1000){
@@ -58,9 +65,12 @@ class VideoAdapter(private val context: Context, private var dataList : List<Vid
     }
 
     fun changeDataList(newData : List<VideoMeta>, newProfile : Map<String, String>? = null){
-        dataList = newData
+        dataList.addAll(newData)
         if (newProfile != null){
-            profileData = newProfile
+            for (key in newProfile.keys){
+                profileData[key] = newProfile[key].toString()
+            }
+            /*profileData = newProfile*/
         }
         notifyDataSetChanged()
     }

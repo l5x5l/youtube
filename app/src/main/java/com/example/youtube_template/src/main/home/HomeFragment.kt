@@ -1,20 +1,17 @@
 package com.example.youtube_template.src.main.home
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.youtube_template.R
 import com.example.youtube_template.config.BaseFragment
 import com.example.youtube_template.databinding.FragmentHomeBinding
 import com.example.youtube_template.src.main.MainActivity
 import com.example.youtube_template.src.main.home.adapter.VideoAdapter
 import com.example.youtube_template.src.main.home.models.Categories
-import com.example.youtube_template.src.main.home.models.Channels
 import com.example.youtube_template.src.main.home.models.VideoMeta
-import com.example.youtube_template.src.main.home.models.Videos
 import com.google.android.material.chip.Chip
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView {
@@ -22,6 +19,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     private val homeService = HomeService(this)
     private var tempVideoList : List<VideoMeta> ?= null
     private var categoryMap = mutableMapOf<String, String>()
+    private var nextPageToken : String? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +34,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = linearLayoutManager
 
-        binding.recyclerView.adapter = VideoAdapter(activity as MainActivity, listOf<VideoMeta>())
+        binding.recyclerView.adapter = VideoAdapter(activity as MainActivity)
+        binding.recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.recyclerView.canScrollVertically(1)){
+                    homeService.tryGetVideos(nextToken = nextPageToken)
+                    /*Log.d("recyclerview", "is bottom!!")*/
+                }
+            }
+        })
+
         showLoadingDialog(requireContext())
         homeService.tryGetCategories()
         homeService.tryGetVideos()
@@ -47,16 +55,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onGetVideoSuccess(response: Videos) {
-        tempVideoList = response.items ?: listOf()
-
-        var channelString = ""
-        for (i in tempVideoList!!.indices){
-            if (i != 0){
-                channelString += ","
-            }
-            channelString += tempVideoList!![i].snippet.channelId
-        }
+    override fun onGetVideoSuccess(videoList : List<VideoMeta>, channelString : String, nextToken : String?) {
+        tempVideoList = videoList
+        nextPageToken = nextToken
         homeService.tryGetProfile(channelString)
     }
 
@@ -65,13 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         Log.d("onGetVideoFailure", message)
     }
 
-    override fun onGetUserSuccess(response: Channels) {
-        val channelProfileList = response.items
-        val map = mutableMapOf<String, String>()
-
-        for (channelProfile in channelProfileList){
-            map[channelProfile.id] = channelProfile.snippet.thumbnails.default.url
-        }
+    override fun onGetUserSuccess(map : Map<String, String>) {
         (binding.recyclerView.adapter as VideoAdapter).changeDataList(tempVideoList!!, map)
         dismissLoadingDialog()
     }

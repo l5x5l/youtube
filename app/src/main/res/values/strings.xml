@@ -23,6 +23,8 @@
     <string name="login_activity_title">YouTube 최대한 활용하기</string>
     <string name="login_activity_description">지금 로그인하여 동영상을 업로드하거나 저장하고 동영상에 댓글을 남겨 보세요</string>
     <string name="service_terms">개인정보처리방침 및 서비스 약관</string>
+    <!-- SearchFragment 에서 사용됨 -->
+    <string name="soaring_popularity_video">인기 급상승 동영상</string>
     <!-- ContentDescription -->
     <string name="bottom_fab_info">동영상을 올릴 때 사용합니다</string>
 </resources>
