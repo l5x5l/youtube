@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:background="@color/background_color"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_search"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@+id/ic_search"
+        app:layout_constraintEnd_toStartOf="@+id/ic_apply"
+        app:layout_constraintTop_toTopOf="@id/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/ic_search"
+        android:inputType="textNoSuggestions"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:gravity="top"
+        tools:text="test"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_apply"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_north_west"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

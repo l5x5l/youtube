@@ -55,6 +55,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.appbar_search -> {
+                (activity as MainActivity).setSearchLayoutVisible()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onGetVideoSuccess(videoList : List<VideoMeta>, channelString : String, nextToken : String?) {
         tempVideoList = videoList
         nextPageToken = nextToken
