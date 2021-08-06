@@ -12,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YouTube_template">
-        <activity android:name=".src.login.LoginActivity">
-
-        </activity>
+        <activity android:name=".src.login.LoginActivity"/>
         <activity android:name=".src.language.LanguageActivity" />
         <activity android:name=".src.main.MainActivity">
+        </activity>
+        <activity android:name=".src.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
