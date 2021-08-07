@@ -42,25 +42,6 @@
                     app:singleLine="true"
                     app:singleSelection="true">
 
-<!--                    <com.google.android.material.chip.Chip
-                        android:layout_marginStart="6dp"
-                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/chip_text_state"
-                        app:chipBackgroundColor="@color/chip_state"
-                        android:checked="true"
-                        android:text="@string/empty"/>
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/chip_text_state"
-                        app:chipBackgroundColor="@color/chip_state"
-                        android:text="@string/empty"/>-->
-
-
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
