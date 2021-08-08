@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.example.youtube_template.R
 import com.example.youtube_template.config.BaseFragment
 import com.example.youtube_template.databinding.FragmentHomeBinding
@@ -40,8 +41,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!binding.recyclerView.canScrollVertically(1)){
                     homeService.tryGetVideos(nextToken = nextPageToken)
-                    /*Log.d("recyclerview", "is bottom!!")*/
+                    //Log.d("recyclerview", "is bottom!!")
                 }
+            }
+        })
+
+        binding.refreshLayout.setOnRefreshListener(object:RecyclerRefreshLayout.OnRefreshListener{
+            override fun onRefresh() {
+                (binding.recyclerView.adapter as VideoAdapter).clearDataList()
+                nextPageToken = null
+                homeService.tryGetVideos(nextToken = nextPageToken)
             }
         })
 
@@ -73,16 +82,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     override fun onGetVideoFailure(message: String) {
         dismissLoadingDialog()
+        binding.refreshLayout.setRefreshing(false)
         Log.d("onGetVideoFailure", message)
     }
 
     override fun onGetUserSuccess(map : Map<String, String>) {
-        (binding.recyclerView.adapter as VideoAdapter).changeDataList(tempVideoList!!, map)
+        (binding.recyclerView.adapter as VideoAdapter).addDataList(tempVideoList!!, map)
         dismissLoadingDialog()
+        binding.refreshLayout.setRefreshing(false)
     }
 
     override fun onGetUserFailure(message: String) {
         dismissLoadingDialog()
+        binding.refreshLayout.setRefreshing(false)
         Log.d("onGetUserFailure", message)
     }
 

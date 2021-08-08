@@ -42,11 +42,6 @@ class VideoAdapter(private val context: Context) : RecyclerView.Adapter<VideoAda
             holder.userProfile.setBackgroundColor(context.getColor(R.color.black))
         }
 
-        if (position == dataList.size - 1) {
-/*            Log.d("test", position.toString() + " : " + dataList.size.toString())
-            pageLoader.pageLoading()*/
-        }
-
             // 클릭 이벤트와 long click 은 나중에
          /*else {
             holder.videoTitle.text = " ".repeat(10)
@@ -64,7 +59,7 @@ class VideoAdapter(private val context: Context) : RecyclerView.Adapter<VideoAda
         }
     }
 
-    fun changeDataList(newData : List<VideoMeta>, newProfile : Map<String, String>? = null){
+    fun addDataList(newData : List<VideoMeta>, newProfile : Map<String, String>? = null){
         dataList.addAll(newData)
         if (newProfile != null){
             for (key in newProfile.keys){
@@ -72,6 +67,12 @@ class VideoAdapter(private val context: Context) : RecyclerView.Adapter<VideoAda
             }
             /*profileData = newProfile*/
         }
+        notifyDataSetChanged()
+    }
+
+    fun clearDataList(){
+        dataList.clear()
+        profileData.clear()
         notifyDataSetChanged()
     }
 
