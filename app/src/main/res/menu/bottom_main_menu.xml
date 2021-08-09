@@ -24,9 +24,9 @@
         android:icon="@drawable/ic_subscriptions"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/bottom_storage"
-        android:title="@string/home"
-        android:icon="@drawable/ic_storage"
+        android:id="@+id/bottom_movie"
+        android:title="@string/movie"
+        android:icon="@drawable/ic_film"
         app:showAsAction="ifRoom"/>
 
 

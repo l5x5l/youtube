@@ -11,6 +11,7 @@
     <string name="language">언어</string>
     <string name="research">검색</string>
     <string name="user">사용자</string>
+    <string name="movie">영화</string>
     <string name="original">Original</string>
     <string name="MusicApp">Music App</string>
     <string name="middle_dot">u\00b7</string>
@@ -27,4 +28,8 @@
     <string name="soaring_popularity_video">인기 급상승 동영상</string>
     <!-- ContentDescription -->
     <string name="bottom_fab_info">동영상을 올릴 때 사용합니다</string>
+    <!-- MovieFragment 에서 사용됨 -->
+    <string name="movie_main_text">지루한 일상을 깨워줄 \n나만의 작은 영화관 :)</string>
+    <string name="movie_count_text">&#160; \u2606 until Next Level</string>
+    <string name="movie_viewpager_count">%d / %d</string>
 </resources>

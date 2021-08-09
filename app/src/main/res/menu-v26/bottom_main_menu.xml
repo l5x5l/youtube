@@ -24,10 +24,10 @@
         android:icon="@drawable/ic_subscriptions"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/bottom_storage"
-        android:title="@string/home"
+        android:id="@+id/bottom_movie"
+        android:title="@string/movie"
         android:iconTint="@color/white"
-        android:icon="@drawable/ic_storage"
+        android:icon="@drawable/ic_film"
         app:showAsAction="always"/>
 
 

@@ -18,11 +18,13 @@ import com.example.youtube_template.databinding.ActivityMainBinding
 import com.example.youtube_template.src.main.adapter.SearchViewAdapter
 import com.example.youtube_template.src.main.home.HomeFragment
 import com.example.youtube_template.src.main.search.SearchFragment
+import com.example.youtube_template.src.main.movie.MovieFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private val homeFragment : Fragment = HomeFragment()
     private var searchFragment : SearchFragment ?= null
+    private var movieFragment : MovieFragment ?= null
     private var previousFragment = homeFragment
     private lateinit var imm : InputMethodManager
 
@@ -50,6 +52,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         supportFragmentManager.beginTransaction().show(searchFragment!!).commit()
                     }
                     previousFragment = searchFragment!!
+                }
+                R.id.bottom_movie -> {
+                    if (movieFragment == null){
+                        movieFragment = MovieFragment()
+                        supportFragmentManager.beginTransaction().add(binding.fragmentLayout.id, movieFragment!!).commit()
+                    } else {
+                        supportFragmentManager.beginTransaction().show(movieFragment!!).commit()
+                    }
+                    previousFragment = movieFragment!!
                 }
             }
             true
