@@ -89,13 +89,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     fun setSearchLayoutVisible() {
-        imm.showSoftInput(window.decorView.rootView, InputMethodManager.SHOW_IMPLICIT)
         binding.searchLayout.visibility = View.VISIBLE
+        binding.etSearch.requestFocus()
+/*        imm.showSoftInput(window.decorView.rootView, InputMethodManager.SHOW_IMPLICIT)*/
+        imm.showSoftInput(binding.etSearch, 0)
     }
 
     private fun setSearchLayoutGone() {
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
         binding.searchLayout.visibility = View.GONE
+        binding.etSearch.text?.clear()
+        val temp = listOf<String>()
+        (binding.recyclerSearchText.adapter as SearchViewAdapter).searchDataChanged(temp)
     }
 
     // SearchViewAdapter 에서 사용
@@ -109,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val temp = listOf("노트북", "캠핑", "여행", "축구", "게임", binding.etSearch.text.toString())
+            val temp = listOf("노트북", "캠핑", "여행", "축구", "게임", "입력 : " + binding.etSearch.text.toString())
             (binding.recyclerSearchText.adapter as SearchViewAdapter).searchDataChanged(temp)
         }
 
