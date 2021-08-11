@@ -1,5 +1,7 @@
 package com.example.youtube_template.src.main.home
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -8,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.example.youtube_template.R
 import com.example.youtube_template.config.BaseFragment
+import com.example.youtube_template.config.GlobalApplication
 import com.example.youtube_template.databinding.FragmentHomeBinding
+import com.example.youtube_template.src.login.LoginActivity
 import com.example.youtube_template.src.main.MainActivity
 import com.example.youtube_template.src.main.home.adapter.VideoAdapter
 import com.example.youtube_template.src.main.home.models.Categories
 import com.example.youtube_template.src.main.home.models.VideoMeta
 import com.google.android.material.chip.Chip
+import com.kakao.sdk.user.UserApiClient
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView {
 
@@ -68,6 +73,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         return when(item.itemId) {
             R.id.appbar_search -> {
                 (activity as MainActivity).setSearchLayoutVisible()
+                true
+            }
+            R.id.appbar_user -> {
+                if (GlobalApplication.globalSharedPreferences.getString("kakao", "__null__") == "__null__"){
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    startActivity(intent)
+                    activity?.overridePendingTransition(R.anim.vertical_in, R.anim.none)
+                } else {
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Log.e(TAG, "Logout Failure, remove AccessToken from SDK", error)
+                        }
+                        else {
+                            Log.i(TAG, "Logout Success, remove AccessToken from SDK")
+                            showCustomToast("remove Kakao Access Token")
+                        }
+                    }
+                    GlobalApplication.globalSharedPreferences.edit().putString("kakao", "__null__").apply()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

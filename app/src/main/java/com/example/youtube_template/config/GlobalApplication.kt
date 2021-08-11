@@ -2,6 +2,8 @@ package com.example.youtube_template.config
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.example.youtube_template.BuildConfig.KAKAO_API_KEY
+import com.kakao.sdk.common.KakaoSdk
 /*import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor*/
 import retrofit2.Retrofit
@@ -24,6 +26,7 @@ class GlobalApplication : Application() {
         super.onCreate()
         initRetrofitInstance()
         globalSharedPreferences = applicationContext.getSharedPreferences("youtube_template", MODE_PRIVATE)
+        KakaoSdk.init(this, KAKAO_API_KEY)
     }
 
     private fun initRetrofitInstance(){
