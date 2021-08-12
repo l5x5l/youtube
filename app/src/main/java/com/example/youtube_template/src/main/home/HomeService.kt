@@ -17,17 +17,17 @@ class HomeService(val view : HomeFragmentView) {
             override fun onResponse(call: Call<Videos>, response: Response<Videos>) {
                 if (response.isSuccessful){
                     val tempVideoList = response.body()?.items
-                    val nextToken = response.body()?.nextPageToken
+                    val nextPageToken = response.body()?.nextPageToken
 
                     var channelString = ""
                     for (i in tempVideoList!!.indices){
                         if (i != 0){
                             channelString += ","
                         }
-                        channelString += tempVideoList!![i].snippet.channelId
+                        channelString += tempVideoList[i].snippet.channelId
                     }
 
-                    view.onGetVideoSuccess(tempVideoList, channelString, nextToken)
+                    view.onGetVideoSuccess(tempVideoList, channelString, nextPageToken)
                 } else {
                     view.onGetVideoFailure("get response is failure")
                 }

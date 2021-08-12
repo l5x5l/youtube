@@ -24,12 +24,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private val searchService = SearchService(this)
     private var tempVideoList : List<VideoMeta> ?= null
-    private var categoryMap = mutableMapOf<String, String>()
+    /*private var categoryMap = mutableMapOf<String, String>()*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var categoryList = ArrayList<SearchCategory>()
+        val categoryList = ArrayList<SearchCategory>()
         categoryList.add(SearchCategory("인기", R.drawable.background_hot, R.drawable.ic_fire))
         categoryList.add(SearchCategory("음악", R.drawable.background_music, R.drawable.ic_music))
         categoryList.add(SearchCategory("게임", R.drawable.background_game, R.drawable.ic_game_controller))
@@ -44,7 +44,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.categoryRecycler.addItemDecoration(CategoryDecoration(activity as MainActivity))
 
         binding.videoRecycler.layoutManager = LinearLayoutManager(activity as MainActivity)
-        binding.videoRecycler.adapter = VideoAdapter(activity as MainActivity, listOf<VideoMeta>())
+        binding.videoRecycler.adapter = VideoAdapter(activity as MainActivity, listOf())
         binding.videoRecycler.isNestedScrollingEnabled = false
 
         binding.appbar.setLogo(R.drawable.youtube_mini)
@@ -61,7 +61,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun onGetVideoSuccess(response: Videos) {
-        tempVideoList = response.items ?: listOf()
+        tempVideoList = response.items
 
         var channelString = ""
         for (i in tempVideoList!!.indices){

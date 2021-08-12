@@ -12,12 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class GlobalApplication : Application() {
 
-    val YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/"
-    val TMDB_API_URL = "https://api.themoviedb.org/3/"
+    private val youtubeApiUrl = "https://www.googleapis.com/youtube/v3/"
+    private val tmdbApiUrl = "https://api.themoviedb.org/3/"
 
     companion object {
         lateinit var globalSharedPreferences: SharedPreferences
-        val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
+        const val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
         lateinit var youtubeRetrofit: Retrofit
         lateinit var tmdbRetrofit: Retrofit
     }
@@ -33,8 +33,8 @@ class GlobalApplication : Application() {
 /*        val youtubeClient = OkHttpClient.Builder().readTimeout(5000,TimeUnit.MILLISECONDS).connectTimeout(5000, TimeUnit.MILLISECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).addNetworkInterceptor(XAccessTokenInterceptor()).build()*/
 
-        youtubeRetrofit = Retrofit.Builder().baseUrl(YOUTUBE_API_URL).addConverterFactory(GsonConverterFactory.create()).build()
-        tmdbRetrofit = Retrofit.Builder().baseUrl(TMDB_API_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        youtubeRetrofit = Retrofit.Builder().baseUrl(youtubeApiUrl).addConverterFactory(GsonConverterFactory.create()).build()
+        tmdbRetrofit = Retrofit.Builder().baseUrl(tmdbApiUrl).addConverterFactory(GsonConverterFactory.create()).build()
     }
 
 }

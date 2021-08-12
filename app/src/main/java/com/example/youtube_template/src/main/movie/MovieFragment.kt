@@ -3,7 +3,6 @@ package com.example.youtube_template.src.main.movie
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.youtube_template.R

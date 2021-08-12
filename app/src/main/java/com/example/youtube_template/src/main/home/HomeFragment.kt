@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.example.youtube_template.R
 import com.example.youtube_template.config.BaseFragment
 import com.example.youtube_template.config.GlobalApplication
@@ -51,13 +50,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         })
 
-        binding.refreshLayout.setOnRefreshListener(object:RecyclerRefreshLayout.OnRefreshListener{
+        binding.refreshLayout.setOnRefreshListener {
+            (binding.recyclerView.adapter as VideoAdapter).clearDataList()
+            nextPageToken = null
+            homeService.tryGetVideos(nextToken = nextPageToken)
+        }
+
+/*        binding.refreshLayout.setOnRefreshListener(object:RecyclerRefreshLayout.OnRefreshListener{
             override fun onRefresh() {
                 (binding.recyclerView.adapter as VideoAdapter).clearDataList()
                 nextPageToken = null
                 homeService.tryGetVideos(nextToken = nextPageToken)
             }
-        })
+        })*/
 
         showLoadingDialog(requireContext())
         homeService.tryGetCategories()
