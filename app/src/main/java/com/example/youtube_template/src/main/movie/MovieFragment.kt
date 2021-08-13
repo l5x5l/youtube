@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.youtube_template.R
 import com.example.youtube_template.config.BaseFragment
 import com.example.youtube_template.databinding.FragmentMovieBinding
 import com.example.youtube_template.src.main.MainActivity
+import com.example.youtube_template.src.main.movie.adapter.MovieAdapterRecycler
 import com.example.youtube_template.src.main.movie.adapter.MoviePagerAdapter
 import com.example.youtube_template.src.main.movie.models.MovieMeta
 
@@ -23,7 +25,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).setSupportActionBar(binding.movieAppbar)
+        (activity as MainActivity).setSupportActionBar(binding.toolbar.movieAppbar)
         (activity as MainActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.viewPager.adapter = MoviePagerAdapter(activity as MainActivity)
@@ -53,10 +55,16 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::b
                 }
             }
         }
+
+        val linearLayoutManager = LinearLayoutManager(activity as MainActivity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding.recyclerMoviePopular.layoutManager = linearLayoutManager
+        binding.recyclerMoviePopular.adapter = MovieAdapterRecycler(activity as MainActivity)
     }
 
     override fun onGetPopularMovieSuccess(movieList: List<MovieMeta>) {
         (binding.viewPager.adapter as MoviePagerAdapter).addMovieData(movieList)
+        (binding.recyclerMoviePopular.adapter as MovieAdapterRecycler).addMovieData(movieList)
         binding.tvViewpagerCount.text = getString(R.string.movie_viewpager_count, 1, movieList.size)
         viewPagerThread.start()
     }

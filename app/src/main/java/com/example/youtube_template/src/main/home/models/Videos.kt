@@ -1,6 +1,6 @@
 package com.example.youtube_template.src.main.home.models
 
-data class ThumbnailURL(val url: String, val width: UInt, val height: UInt)
+data class ThumbnailURL(val url: String, val width: Int, val height: Int)
 
 data class VideoThumbnail(val default:ThumbnailURL, val medium:ThumbnailURL, val high:ThumbnailURL, val standard:ThumbnailURL, val maxres:ThumbnailURL)
 

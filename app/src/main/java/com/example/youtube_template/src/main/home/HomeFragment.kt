@@ -30,8 +30,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appbar.setLogo(R.drawable.youtube_mini)
-        (activity as MainActivity).setSupportActionBar(binding.appbar)
+        binding.toolbar.appbar.setLogo(R.drawable.youtube_mini)
+        (activity as MainActivity).setSupportActionBar(binding.toolbar.appbar)
         (activity as MainActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         setHasOptionsMenu(true)
 
@@ -135,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             chip.text = category.snippet.title
             chip.isCheckable = true
             chip.isCheckedIconVisible = false
-            binding.chipGroupHome.addView(chip)
+            binding.toolbar.chipGroupHome.addView(chip)
         }
     }
 

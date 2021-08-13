@@ -32,4 +32,8 @@
     <string name="movie_main_text">지루한 일상을 깨워줄 \n나만의 작은 영화관 :)</string>
     <string name="movie_count_text">&#160; \u2606 until Next Level</string>
     <string name="movie_viewpager_count">%d / %d</string>
+    <string name="movie_upcoming">coming soon</string>
+    <string name="movie_popular">인기 영화</string>
+    <!-- ItemMovieRecycler 에서 사용됨 -->
+    <string name="buy">구매</string>
 </resources>
