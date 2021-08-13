@@ -35,7 +35,20 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::b
                 binding.tvViewpagerCount.text = getString(R.string.movie_viewpager_count, position + 1, (binding.viewPager.adapter as MoviePagerAdapter).itemCount)
             }
         })
+
+        val linearLayoutManager = LinearLayoutManager(activity as MainActivity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding.recyclerMoviePopular.layoutManager = linearLayoutManager
+        binding.recyclerMoviePopular.adapter = MovieAdapterRecycler(activity as MainActivity)
+
+        val linearLayoutManager2 = LinearLayoutManager(activity as MainActivity)
+        linearLayoutManager2.orientation = LinearLayoutManager.HORIZONTAL
+        binding.recyclerMovieTopRate.layoutManager = linearLayoutManager2
+        binding.recyclerMovieTopRate.adapter = MovieAdapterRecycler(activity as MainActivity)
+
         movieService.tryGetPopularMovies()
+        movieService.tryGetTopRatedMovies()
+        movieService.tryGetUpcomingMovies()
 
         isRunning = true
         viewPagerThread = Thread {
@@ -55,18 +68,6 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::b
                 }
             }
         }
-
-        val linearLayoutManager = LinearLayoutManager(activity as MainActivity)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        binding.recyclerMoviePopular.layoutManager = linearLayoutManager
-        binding.recyclerMoviePopular.adapter = MovieAdapterRecycler(activity as MainActivity)
-    }
-
-    override fun onGetPopularMovieSuccess(movieList: List<MovieMeta>) {
-        (binding.viewPager.adapter as MoviePagerAdapter).addMovieData(movieList)
-        (binding.recyclerMoviePopular.adapter as MovieAdapterRecycler).addMovieData(movieList)
-        binding.tvViewpagerCount.text = getString(R.string.movie_viewpager_count, 1, movieList.size)
-        viewPagerThread.start()
     }
 
     override fun onDestroyView() {
@@ -75,15 +76,21 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::b
         super.onDestroyView()
     }
 
-    override fun onGetTopRatedMovieSuccess(movieList: List<MovieMeta>) {
+    override fun onGetPopularMovieSuccess(movieList: List<MovieMeta>) {
+        (binding.recyclerMoviePopular.adapter as MovieAdapterRecycler).addMovieData(movieList)
+    }
 
+    override fun onGetTopRatedMovieSuccess(movieList: List<MovieMeta>) {
+        (binding.recyclerMovieTopRate.adapter as MovieAdapterRecycler).addMovieData(movieList)
     }
 
     override fun onGetUpcomingMovieSuccess(movieList: List<MovieMeta>) {
-
+        (binding.viewPager.adapter as MoviePagerAdapter).addMovieData(movieList)
+        binding.tvViewpagerCount.text = getString(R.string.movie_viewpager_count, 1, movieList.size)
+        viewPagerThread.start()
     }
 
     override fun onGetMovieFailure(message: String) {
-
+        (activity as MainActivity).showCustomToast("onGetMovieFailure")
     }
 }

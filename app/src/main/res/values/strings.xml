@@ -34,6 +34,7 @@
     <string name="movie_viewpager_count">%d / %d</string>
     <string name="movie_upcoming">coming soon</string>
     <string name="movie_popular">인기 영화</string>
+    <string name="movie_topRate">높은 평가순</string>
     <!-- ItemMovieRecycler 에서 사용됨 -->
     <string name="buy">구매</string>
 </resources>
