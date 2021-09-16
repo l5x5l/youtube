@@ -1,2 +1,2 @@
 # youtube
-refactor youtube_clone using mvp design pattern
+refactor youtube_clone with template
